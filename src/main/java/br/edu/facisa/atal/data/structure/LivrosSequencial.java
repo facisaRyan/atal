@@ -152,7 +152,6 @@ public class LivrosSequencial {
             }
 
             if (Util.isBiggerThan(bookNode.getTittle().toLowerCase(), livro.getTittle().toLowerCase())) {
-                // logica para buscar atra não funciona
                 return findByBook(livros, livro, startLeft, index - 1);
 
             } else {
@@ -165,7 +164,16 @@ public class LivrosSequencial {
 
     
     public void add (int index, Livro livro){
-        //TODO inserir passando o index
+
+        if(isFull()){
+            increseArray();
+        }
+
+        for (int i = size(); i > index; i --){
+            livros[i] = livros[i-1];
+        }
+        livros[index] = livro;
+        inseridos ++;
     }
 
 }
