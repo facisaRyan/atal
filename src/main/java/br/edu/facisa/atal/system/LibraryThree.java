@@ -2,6 +2,8 @@ package br.edu.facisa.atal.system;
 
 import br.edu.facisa.atal.data.load.LoadBooksBatch;
 import br.edu.facisa.atal.data.structure.LivrosSequencial;
+import br.edu.facisa.atal.data.structure.Tree;
+import br.edu.facisa.atal.models.BookNode;
 import br.edu.facisa.atal.models.Livro;
 import br.edu.facisa.atal.search.BinarySearch;
 import br.edu.facisa.atal.search.Search;
@@ -11,19 +13,16 @@ import br.edu.facisa.atal.sort.Sort;
 import java.util.Scanner;
 
 public class LibraryThree {
-    LivrosSequencial livros;
-    Sort sort;
-    Search search;
+    Tree livros;
+
 
     public LibraryThree(){
-        this.livros = new LivrosSequencial();
-        LoadBooksBatch.loadTenBooks(this.livros);
-        this.sort = new QuickSort();
-        this.search = new BinarySearch();
+        this.livros = new Tree();
+        LoadBooksBatch.loadTenNodeBooks(this.livros);
     }
 
     public void listarLivros() {
-        livros.printArray();
+        livros.preOrder(livros.getHead());
     }
 
     public void cadastrarLivro() {
@@ -41,24 +40,16 @@ public class LibraryThree {
         String bookAuthor = scannerCadastro.nextLine();
         System.out.println("----------------------------------------");
         Livro livro = new  Livro(isbn,bookAuthor,bookName);
-        this.livros.add(livro);
+        this.livros.add(this.livros.getHead(), new BookNode(livro));
         System.out.println("Livro cadastrado com sucesso " + livro);
     }
 
-    public void sort(Integer chooseSort) {
-        if (chooseSort == 1){
-           this.livros = sort.sortByAuthor(this.livros);
-           this.listarLivros();
-        }
-        else {
-            this.livros =  sort.sortByTittle(this.livros);
-            this.listarLivros();
-        }
+    public void sort() {
+       this.livros.inOrder(this.livros.getHead());
     }
 
     public void findByName(String bookName) {
-        this.livros = sort.sortByTittle(livros);
-        Livro livro = search.findByBookName(this.livros,bookName,0,this.livros.size()-1);
+        Livro livro = livros.searchByTittle(this.livros.getHead(),bookName);
         if (livro == null) {
             System.out.println("Livro não encontrado");
         }

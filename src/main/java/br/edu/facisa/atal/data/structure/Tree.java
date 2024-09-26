@@ -2,6 +2,7 @@ package br.edu.facisa.atal.data.structure;
 
 
 import br.edu.facisa.atal.models.BookNode;
+import br.edu.facisa.atal.models.Livro;
 import br.edu.facisa.atal.util.Util;
 
 
@@ -22,19 +23,21 @@ public class Tree {
             insertLeft(node,value);
         }
     }
+
     public void posOrder(BookNode node){
         if (node == null){
             return;
         }
         posOrder(node.getLeft());
         posOrder(node.getRight());
-        System.out.print(node.getBook().getTittle() + "|");
+        System.out.print(node.getBook().getTittle() + ",");
     }
     public void preOrder(BookNode node){
         if (node == null){
             return;
         }
-        System.out.print(node.getBook().getTittle() + "|");
+        System.out.print(node.getBook());
+        System.out.println("");
         preOrder(node.getLeft());
         preOrder(node.getRight());
     }
@@ -43,11 +46,29 @@ public class Tree {
             return;
         }
         inOrder(node.getLeft());
-        System.out.print(node.getBook().getTittle() + "|");
+        System.out.print(node.getBook());
+        System.out.println("");
         inOrder(node.getRight());
     }
-    public void searchByTittle (String tittle){}
-    public void seatchByAuthor (String author){}
+    public Livro searchByTittle (BookNode node, String tittle){
+
+
+        if (node == null) {
+            return null;
+        }
+        if (node.getBook().getTittle().equalsIgnoreCase(tittle)){
+          return node.getBook();
+        }
+        if (Util.isBiggerThan(tittle,node.getBook().getTittle())){
+           return searchByTittle(node.getRight(),tittle);
+        }
+        else {
+           return searchByTittle(node.getLeft(),tittle);
+        }
+    }
+
+
+
 
     public BookNode getHead() {
         return head;

@@ -1,21 +1,25 @@
 package br.edu.facisa.atal.display;
 
 import br.edu.facisa.atal.system.Library;
+import br.edu.facisa.atal.system.LibraryThree;
 
 import java.util.Scanner;
 
 public class Menu {
 
-    Library library;
+
+
+    private LibraryThree library;
 
     public Menu (){
-        this.library = new Library();
+        this.library = new LibraryThree();
     }
 
 
 
 
     private void printMainMenu (){
+        System.out.println("");
         System.out.println("----------------------Biblioteca-------------------------");
         System.out.println("1 - Listar livros");
         System.out.println("2 - Adicionar um livro ");
@@ -70,8 +74,7 @@ public class Menu {
                 break;
 
             case 3:
-               Integer chooseSort = chooseSort();
-               library.sort(chooseSort);
+               library.sort();
                 break;
 
             case 4:
