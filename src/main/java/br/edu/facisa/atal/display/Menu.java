@@ -70,7 +70,6 @@ public class Menu {
                 break;
 
             case 3:
-                // Login
                Integer chooseSort = chooseSort();
                library.sort(chooseSort);
                 break;
